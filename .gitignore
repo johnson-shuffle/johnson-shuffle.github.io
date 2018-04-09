@@ -1,6 +1,6 @@
-.Rproj.user
-.Rhistory
-.RData
-.Ruserdata
-.DS_Store
-/src
+*.Rproj.user
+*.Rhistory
+*.RData
+*.Ruserdata
+*.Rproj
+*.DS_Store

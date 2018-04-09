@@ -1,0 +1,53 @@
+---
+title: "Setting up a blog via R, GitHub pages, and blogdown"
+author: ""
+date: '2017-09-11'
+slug: setting-up-a-blog-via-r-github-pages-and-blogdown
+categories: []
+tags: ['R', 'GitHub', 'blogdown']
+math: true
+---
+
+
+
+<p>I finally decided to bite the bullet and create a blog to document my exploration of economics and data science. This decision was made in tandem with an effort to start incorporating Git into my workflow. Why Git? I became more interested after reading this <a href="https://peerj.com/preprints/3159/">paper</a> which I found via Revolution Analytics’ <a href="http://blog.revolutionanalytics.com/">blog</a>. Incidentally, the author of that paper has an awesome introduction to Git and GitHub which can be found <a href="http://happygitwithr.com/">here</a>.</p>
+<p>My primary tool for analysis, visualization, and documentation is <a href="http://www.r-project.org/">R</a> along with its interface <a href="https://www.rstudio.com/products/rstudio/#Desktop">RStudio</a>. It turns out that it is relatively straightforward to utilize RStudio’s Markdown functionality along with the R package <a href="https://bookdown.org/yihui/blogdown/"><code>blogdown</code></a> to generate a static website which can then be hosted via <a href="https://pages.github.com/">GitHub</a>.</p>
+<div id="step-1-github" class="section level3">
+<h3>Step 1: GitHub</h3>
+<p>Get yourself a GitHub account and create a new repository called <em>USERNAME.github.io</em> where USERNAME is your own GitHub account user name (for me this is johnson-shuffle). Be sure to check the box Initialize this repository with a README.</p>
+<p>This should open the site for your new repository. Select create new file and provide the name <em>.nojekyll</em> and commit; this prevents GitHub from building the site using <code>jekyll</code>. After a bit of trial and error, I also decided it was convenient to have a folder within this repository to store all the generic <code>blogdown</code> files. This required the following additional step. Create a new file with the name <em>blogdown/foo.txt</em>. This creates the folder <em>blogdown</em> (the file <em>foo.txt</em> can be deleted later).</p>
+</div>
+<div id="step-2-create-a-version-controlled-rstudio-project" class="section level3">
+<h3>Step 2: Create a version controlled RStudio Project</h3>
+<p>Open up RStudio and create a new project using version control and the Git option. You will be prompted to provide:</p>
+<ul>
+<li><strong>Repository URL</strong>: <code>https://USERNAME.github.io/</code></li>
+<li><strong>Project directory name</strong>: leave this blank</li>
+<li><strong>Create project as a subdirectory of</strong>: select local directory for the repository</li>
+</ul>
+<p>Once you create the project, a new folder called <em>USERNAME.github.io</em> should be created in whichever local directory you chose. This folder should contain:</p>
+<ul>
+<li><em>.gitignore</em></li>
+<li><em>.nojekyll</em></li>
+<li><em>README.md</em></li>
+<li><em>/blogdown</em></li>
+</ul>
+</div>
+<div id="step-3-install-and-implement-blogdown" class="section level3">
+<h3>Step 3: Install and implement blogdown</h3>
+<p>Assuming this new R project is open in RStudio, run the following:</p>
+<pre class="r"><code>library(blogdown)
+
+setwd(&#39;blogdown&#39;)
+
+new_site(theme = &#39;gcushen/academic&#39;)</code></pre>
+<p>The above should create a bunch of files in the <em>blogdown</em> folder of the local directory. One of these is <em>config.toml</em>. This file provides some personal information (name, education, social media, etc) used when building the site. Importantly, it also directs <code>blogdown</code> on where to write the files when building. Open this file and add:</p>
+<pre class="r"><code>publishDir = &quot;../&quot;</code></pre>
+<p>at the top of the file. This ensures that <code>blogdown</code> builds the website directly into the <em>USERNAME.github.io</em> folder. The site can now be built by running:</p>
+<pre class="r"><code>hugo_build()</code></pre>
+<p>Note that the <code>theme</code> option of <code>new_site()</code> is optional. See the documentation on <code>blogdown</code> for more options on themes.</p>
+</div>
+<div id="step-4-commit-changes-to-github" class="section level3">
+<h3>Step 4: Commit changes to GitHub</h3>
+<p>At this point, commit the changes by navigating to the Git pane in RStudio. Press commit, select all the files, and add a message. Once everything is committed, press push to sync with GitHub. If everything worked correctly, navigating to <code>https://USERNAME.github.io/</code> should produce the new site.</p>
+</div>

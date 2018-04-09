@@ -1,0 +1,416 @@
+---
+title: Seattle Terry stops
+author: ~
+date: '2017-11-06'
+slug: seattle-terry-stops
+categories: []
+tags: []
+math: true
+---
+
+
+
+<p>Below is a look into racial bias in Seattle’s <a href="https://en.wikipedia.org/wiki/Terry_stop">Terry stop</a> data which I did as part of volunteer work for <a href="http://datafordemocracy.org/">Data For Democracy</a>. The analysis is based on a paper which examines “Stop-and-Frisk” in New York City which can be found <a href="http://www.stat.columbia.edu/~gelman/research/published/frisk9.pdf">here</a>.</p>
+<!--#########################################################################-->
+<div id="data" class="section level1">
+<h1>Data</h1>
+<!--#########################################################################-->
+<div id="seattle-incident-based-reporting" class="section level2">
+<h2>Seattle Incident-Based Reporting</h2>
+<p>Below are maps which show the spatial locations of all Seattle Police Department (SPD) incidents in 2016 for which data is available. The full data set is available <a href="https://data.seattle.gov/Public-Safety/Seattle-Police-Department-Police-Report-Incident/7ais-f98f">here</a>. Each map corresponds to one of the Uniform Crime Reporting (UCR)’s 12 categories while the colored areas delineate one of SPD’s 17 police sectors.</p>
+<p><img src="/post/2017-11-06-seattle-terry-stops_files/figure-html/sibr-1.png" width="864" /></p>
+</div>
+<div id="national-incident-based-reporting" class="section level2">
+<h2>National Incident-Based Reporting</h2>
+<p>Unfortunately, the data presented above do not include any demographic information; this is obviously problematic when one is interested in examining crime data along racial dimensions. Fortunately, SPD participates in the National Incident-Based Reporting System (<a href="https://www.icpsr.umich.edu/icpsrweb/ICPSR/series/128">NIBRS</a>) and some of the records – approximately 40% – submitted into this system do contain demographic information however these data do not include any spatial information.</p>
+<p>To utilize both sources, the SPD and NIBRS are matched by incident datetime and type of crime which, of course, only works for instances in which this information is unique (otherwise it is not possible to match). Using this strategy, approximately 14% of the records can be matched. The significance of this is that the matched data provide demographic information by both sector AND race.</p>
+<p>Aggregate counts by race/ethnicity are summarized below:</p>
+<p><img src="/post/2017-11-06-seattle-terry-stops_files/figure-html/mibr-1.png" width="864" /></p>
+<p>where: A indicates Asian, B indicates black, H indicates Hispanic, I indicates Alaska Native or American Indian, and W indicates white. The solid portion of each bar in the plot above represents data found in the Arrestee segment of the NIBRS data set while the transparent portion represents data found in the Offender segment of the data set.</p>
+</div>
+<div id="terry-stops" class="section level2">
+<h2>Terry stops</h2>
+<p>SPD’s Terry stop data can be found <a href="https://data.seattle.gov/Public-Safety/Terry-Stops/28ny-9ts8">here</a>. The aggregated demographic information – again, counts by race – is summarized below and one can see that the pattern is quite similar to that found in the incidents data:</p>
+<p><img src="/post/2017-11-06-seattle-terry-stops_files/figure-html/terry-1-1.png" width="864" /></p>
+<p>A, B, H, I, and W are defined as above and – in this case – the solid portion of each bar represents stops that led to an arrest while the transparent portion represents stops that did not.</p>
+</div>
+<div id="american-community-survey" class="section level2">
+<h2>American Community Survey</h2>
+<p>Demographic data for each police sector are obtained by utilizing the 2015 five-year estimates of the American Community Survey (ACS). These data are available at the block-group level of which the city contains 482; of these, 389 lie completely within one of the the 17 police sectors. For those block-groups lying in multiple sectors, the percentage of area of overlap between the sector and the block-group is used to spatially allocate the data.</p>
+<p>For example, approximately 30% of the area of Block Group 6 of Census Tract 32 is located in sector B and so sector B is apportioned 30% of that block-group’s population, etc.</p>
+<p>A natural point of comparison is the demographic profile of the city as a whole. This is summarized below:</p>
+<p><img src="/post/2017-11-06-seattle-terry-stops_files/figure-html/acs-race-1.png" width="324" /></p>
+<p>In comparision to the counts of arrests and stops, one can see that blacks are dramatically overrepresented and it is exactly this type of race-based disparity that the city is hoping to address. For example, see <a href="https://www.seattle.gov/rsji/about">here</a>.</p>
+<p>With respect to the rest of the analysis, the following demographic and economic data from the ACS are also used:</p>
+<table>
+<caption><span id="tab:acs-tom">Table 1: </span>Table of Means</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">Mean</th>
+<th align="center">SD</th>
+<th align="center">Min</th>
+<th align="center">Max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Median Income</td>
+<td align="center">61830.20</td>
+<td align="center">14767.72</td>
+<td align="center">33943.99</td>
+<td align="center">85110.19</td>
+</tr>
+<tr class="even">
+<td>Proportion black</td>
+<td align="center">0.09</td>
+<td align="center">0.07</td>
+<td align="center">0.01</td>
+<td align="center">0.24</td>
+</tr>
+<tr class="odd">
+<td>Proportion with four year degree</td>
+<td align="center">0.62</td>
+<td align="center">0.15</td>
+<td align="center">0.32</td>
+<td align="center">0.79</td>
+</tr>
+</tbody>
+</table>
+<!--#########################################################################-->
+</div>
+</div>
+<div id="models" class="section level1">
+<h1>Models</h1>
+<!--#########################################################################-->
+<div id="approach-1" class="section level2">
+<h2>Approach 1</h2>
+<p>For each race <span class="math inline">\(r = \{A, B, I, W\}\)</span><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> and police sector <span class="math inline">\(s\)</span>, the annual number of Terry stops <span class="math inline">\(y_{rst}\)</span> is modeled by an overdispersed Poisson regression using the number of crimes <span class="math inline">\(\theta_{rs}\)</span> as an offset:</p>
+<span class="math display">\[\begin{equation*}
+y_{rst} \sim \text{Poisson} \left( \theta_{rs} e^{\mu + \alpha_r + \beta_s + \epsilon_{rst}} \right)
+\end{equation*}\]</span>
+<p>where the <span class="math inline">\(\alpha_r\)</span>’s account for variation between races, the <span class="math inline">\(\beta_s\)</span>’s account for variation between sectors, and the <span class="math inline">\(\epsilon_{rs}\)</span>’s allow for overdispersion. The subscript <span class="math inline">\(t\)</span> is used explicitly since two years of data – 2015 and 2016 – are available.</p>
+<p><span class="math inline">\(\theta_{rs}\)</span> – of course – is not observed. Thus, the number of previous year’s arrests <span class="math inline">\(a_{rs(t-1)}\)</span> is used as a proxy:</p>
+<span class="math display" id="eq:model-b1">\[\begin{equation}
+y_{rst} \sim \text{Poisson} \left( a_{rs(t-1)} e^{\mu + \alpha_r + \beta_s + \epsilon_{rst}} \right)
+\tag{1}
+\end{equation}\]</span>
+<p>In addition to the model above, two alternative specifications are considered. First, the offset <span class="math inline">\(a_{rs(t-1)}\)</span> is modeled more flexibly by including it as a predictor with its own coefficient:</p>
+<span class="math display" id="eq:model-b2">\[\begin{equation}
+y_{rst} \sim \text{Poisson} \left( e^{\gamma \log(a_{rs(t-1)}) + \mu + \alpha_r + \beta_s + \epsilon_{rst}} \right)
+\tag{2}
+\end{equation}\]</span>
+<p>Second, the proportion of the sector’s population that is black <span class="math inline">\(z_{1s}\)</span> is added as a predictor:</p>
+<span class="math display" id="eq:model-b3">\[\begin{equation}
+y_{rst} \sim \text{Poisson} \left( a_{rs(t-1)} e^{\mu + \alpha_r + \beta_s + \rho z_{1s} + \epsilon_{rst}} \right)
+\tag{3}
+\end{equation}\]</span>
+</div>
+<div id="approach-2" class="section level2">
+<h2>Approach 2</h2>
+<p>As alternative approach, the number of arrests <span class="math inline">\(a_{rst}\)</span> are assumed to be a realization of the true crime rate:</p>
+<span class="math display">\[\begin{equation*}
+\begin{split}
+y_{rst} &amp;\sim \text{Poisson} \left( \theta_{rs} e^{\mu + \alpha_r + \beta_s + \epsilon_{rst}} \right) \\
+a_{rst} &amp;\sim \text{Poisson} \left( \theta_{rs} \right)
+\end{split}
+\end{equation*}\]</span>
+<p>with the rate then modeled as function of each race’s population in the sector <span class="math inline">\(p_{rs}\)</span> and an additional set of race and sector parameters <span class="math inline">\(\delta_r\)</span> and <span class="math inline">\(\zeta_s\)</span>:</p>
+<span class="math display" id="eq:model-c1">\[\begin{equation}
+\log(\theta_{rs}) = \log(p_{rs}) + \nu + \delta_r + \zeta_s + \upsilon_{rs}
+\tag{4}
+\end{equation}\]</span>
+<p>Two additional specifications of the model for <span class="math inline">\(\theta_{rs}\)</span> are also considered. First, the population <span class="math inline">\(p_{rs}\)</span> is given its own coefficient:</p>
+<span class="math display" id="eq:model-c2">\[\begin{equation}
+\log(\theta_{rs}) = \gamma \log(p_{rs}) + \nu + \delta_r + \zeta_s + \upsilon_{rs}
+\tag{5}
+\end{equation}\]</span>
+<p>Second, each sector’s median income <span class="math inline">\(z_{2s}\)</span> and proportion of the population with at least a four-year degree <span class="math inline">\(z_{3s}\)</span> are included as predictors:</p>
+<span class="math display" id="eq:model-c3">\[\begin{equation}
+\log(\theta_{rs}) = \log(p_{rs}) + \nu + \delta_r + \zeta_s + \phi z_{2s} + \psi z_{3s} + \upsilon_{rs}
+\tag{6}
+\end{equation}\]</span>
+</div>
+<div id="approach-3" class="section level2">
+<h2>Approach 3</h2>
+<p>As a final approach, a model is considered where overdispersion in the model for <span class="math inline">\(a_{rst}\)</span> is allowed for:</p>
+<span class="math display">\[\begin{equation*}
+\begin{split}
+y_{rst} &amp;\sim \text{Poisson} \left( \theta_{rs} e^{\mu + \alpha_r + \beta_s + \epsilon_{rst}} \right) \\
+a_{rst} &amp;\sim \text{Poisson} \left( \theta_{rs} e^{\omega_{rst}} \right)
+\end{split}
+\end{equation*}\]</span>
+<p>Similar specifications for the true crime rate as in <a href="#eq:model-c1">(4)</a>, <a href="#eq:model-c2">(5)</a>, and <a href="#eq:model-c3">(6)</a> are used in this case with the exception of the <span class="math inline">\(\upsilon_{rs}\)</span> term.</p>
+</div>
+<div id="inference" class="section level2">
+<h2>Inference</h2>
+<p>The models are fit using <span class="math inline">\(\texttt{Stan}\)</span> with the following normal priors:</p>
+<span class="math display">\[\begin{equation*}
+\begin{split}
+\alpha_r &amp;\sim N(0, \sigma_{\alpha}^2) \\
+\beta_s &amp;\sim N(0, \sigma_{\beta}^2) \\
+\epsilon_{rs} &amp;\sim N(0, \sigma_{\epsilon}^2)
+\end{split}
+\end{equation*}\]</span>
+<p>where <span class="math inline">\(\sigma_{\alpha}\)</span>, <span class="math inline">\(\sigma_{\beta}\)</span>, and <span class="math inline">\(\sigma_{\epsilon}\)</span> represent the variation in the parameters for race, sector, and overdispersion respectively. A similar set of priors are used for the approaches which explicitly model <span class="math inline">\(\theta_{rs}\)</span>:</p>
+<span class="math display">\[\begin{equation*}
+\begin{split}
+\delta_r &amp;\sim N(0, \sigma_{\delta}^2) \\
+\zeta_s &amp;\sim N(0, \sigma_{\zeta}^2) \\
+\upsilon_{rs} &amp;\sim N(0, \sigma_{\upsilon}^2) \\
+\omega_{rs} &amp;\sim N(0, \sigma_{\omega}^2) 
+\end{split}
+\end{equation*}\]</span>
+<p>The above <span class="math inline">\(\sigma\)</span> hyperparameters – as well as all other parameters in each of the models – are given flat priors.</p>
+<!-- \begin{equation*} -->
+<!-- \begin{split} -->
+<!-- \sigma_{\alpha} &\sim N_{\geq 0}(0, 1) \\ -->
+<!-- \sigma_{\delta} &\sim N_{\geq 0}(0, 1) -->
+<!-- \end{split} -->
+<!-- \end{equation*} -->
+<!-- where $N_{\geq 0}$ denotes the half-normal distribution with non-negative support. -->
+<!--#########################################################################-->
+</div>
+</div>
+<div id="results" class="section level1">
+<h1>Results</h1>
+<!--#########################################################################-->
+<table>
+<caption><span id="tab:table-one">Table 2: </span>Estimates and standard errors for the Poisson regression model of <span class="math inline">\(y_{rst}\)</span></caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+<th align="center">4</th>
+<th align="center">5</th>
+<th align="center">6</th>
+<th align="center">7</th>
+<th align="center">8</th>
+<th align="center">9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\mu^{adj}\)</span></td>
+<td align="center">-0.66 (0.03)</td>
+<td align="center">0.28 (0.24)</td>
+<td align="center">-0.63 (0.05)</td>
+<td align="center">-0.67 (0.03)</td>
+<td align="center">-0.68 (0.03)</td>
+<td align="center">-0.67 (0.03)</td>
+<td align="center">-0.67 (0.06)</td>
+<td align="center">-0.68 (0.05)</td>
+<td align="center">-0.67 (0.06)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\gamma\)</span></td>
+<td align="center"></td>
+<td align="center">0.76 (0.06)</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\rho\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">-0.29 (0.50)</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\sigma_\beta\)</span></td>
+<td align="center">0.19 (0.05)</td>
+<td align="center">0.13 (0.06)</td>
+<td align="center">0.20 (0.05)</td>
+<td align="center">0.20 (0.05)</td>
+<td align="center">0.20 (0.05)</td>
+<td align="center">0.20 (0.05)</td>
+<td align="center">0.10 (0.08)</td>
+<td align="center">0.12 (0.07)</td>
+<td align="center">0.10 (0.07)</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\sigma_\epsilon\)</span></td>
+<td align="center">0.26 (0.04)</td>
+<td align="center">0.29 (0.04)</td>
+<td align="center">0.26 (0.04)</td>
+<td align="center">0.20 (0.03)</td>
+<td align="center">0.19 (0.03)</td>
+<td align="center">0.19 (0.03)</td>
+<td align="center">0.47 (0.04)</td>
+<td align="center">0.36 (0.04)</td>
+<td align="center">0.24 (0.02)</td>
+</tr>
+</tbody>
+</table>
+<p>In the models for <span class="math inline">\(y_{rst}\)</span>, the race and sector coefficients are considered relative to their mean by making the following adjustments:</p>
+<span class="math display">\[\begin{equation*}
+\begin{split}
+\alpha_r^{adj} &amp;= \alpha_r - \bar \alpha \\
+\beta_s^{adj} &amp;= \beta_s - \bar \beta \\
+\mu^{adj} &amp;= \mu + \bar \alpha + \bar \beta
+\end{split}
+\end{equation*}\]</span>
+<p>Posterior estimates are presented in Table 2.</p>
+<p>With the exception of <a href="#eq:model-b2">(2)</a>, the estimates of <span class="math inline">\(\mu^{adj}\)</span> indicate that prior to considering the race and sector effects, on average, the stop rates are approximately <span class="math inline">\(e^{-0.66}\)</span> or 50% lower than the prior year’s arrest rates. The magnitude of this coefficient is directly related to the missingness in the stops data – recall, that only about 14% of the NIBRS data could be matched to the SPD data.</p>
+<p>Including the proportion of the sector’s population that is black has no discernible impact on the model as <span class="math inline">\(\rho\)</span> is indistinguishable from zero. Race and sector effects – expressed as <span class="math inline">\(e^{\alpha_r}\)</span> and <span class="math inline">\(e^{\beta_s}\)</span> are presented below:</p>
+<p><img src="/post/2017-11-06-seattle-terry-stops_files/figure-html/plots-one-1.png" width="960" /></p>
+<p>where the points indicate the posterior means and the error bars indicate the 95% HPD intervals. The natural point of comparison here is the value one which would indicate that relative stops – either among the races or the sectors – were not higher or lower than the prior year’s arrests would suggest.</p>
+<p>From the graph one can see that Asians and blacks are stopped relatively less, Alaska Natives and American Indians are stopped relatively more (noticeably so!), while stops of whites are consistent with the average pattern observed between stops and arrests (i.e. a 50% difference).</p>
+<table>
+<caption><span id="tab:table-two">Table 3: </span>Estimates and standard errors for the Poisson regression model of <span class="math inline">\(\theta_{rs}\)</span></caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">4</th>
+<th align="center">5</th>
+<th align="center">6</th>
+<th align="center">7</th>
+<th align="center">8</th>
+<th align="center">9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\nu^{adj}\)</span></td>
+<td align="center">-3.90 (0.06)</td>
+<td align="center">0.66 (0.58)</td>
+<td align="center">-3.90 (0.06)</td>
+<td align="center">-3.92 (0.04)</td>
+<td align="center">0.08 (0.31)</td>
+<td align="center">-3.92 (0.04)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\gamma\)</span></td>
+<td align="center"></td>
+<td align="center">0.42 (0.07)</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">0.49 (0.04)</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\phi\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">-1.07 (0.45)</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">-0.96 (0.49)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\psi\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">0.22 (0.47)</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">0.14 (0.50)</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\sigma_\zeta\)</span></td>
+<td align="center">0.87 (0.19)</td>
+<td align="center">0.58 (0.12)</td>
+<td align="center">0.76 (0.18)</td>
+<td align="center">0.94 (0.19)</td>
+<td align="center">0.64 (0.13)</td>
+<td align="center">0.82 (0.18)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\sigma_\upsilon\)</span></td>
+<td align="center">0.46 (0.05)</td>
+<td align="center">0.31 (0.04)</td>
+<td align="center">0.46 (0.05)</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\sigma_\omega\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">0.40 (0.03)</td>
+<td align="center">0.26 (0.03)</td>
+<td align="center">0.40 (0.03)</td>
+</tr>
+</tbody>
+</table>
+<p>In the models for <span class="math inline">\(\theta_{rst}\)</span>, the race and sector coefficients are also considered relative to their mean by making the similar adjustments:</p>
+<span class="math display">\[\begin{equation*}
+\begin{split}
+\delta_r^{adj} &amp;= \delta_r - \bar \delta \\
+\zeta_s^{adj} &amp;= \zeta_s - \bar \zeta \\
+\nu^{adj} &amp;= \nu + \bar \delta + \bar \zeta
+\end{split}
+\end{equation*}\]</span>
+<p>Posterior estimates are presented in Table 3.</p>
+<p>Excluding models that included <span class="math inline">\(\gamma\)</span>, the estimates of <span class="math inline">\(\nu^{adj}\)</span> indicate that prior to considering the race and sector effects – on average – the arrest rates correspond to approximately <span class="math inline">\(e^{-3.90}\)</span> or 2% of the sector’s population.</p>
+<p>Higher median income is associated with a lower true crime rate; the posterior mean for the coefficient suggests that there is a 33% reduction in the crime rate when median income changes from approximately 47,000 to 76,000 dollars. The proportion of the sector’s population with a four-year degree is positively associated with the true crime rate although this value is not distinguishable from zero. Race and sector effects – again, expressed as <span class="math inline">\(e^{\delta_r}\)</span> and <span class="math inline">\(e^{\zeta_s}\)</span> are presented below:</p>
+<p><img src="/post/2017-11-06-seattle-terry-stops_files/figure-html/plots-two-1.png" width="960" /></p>
+<p>Once again, the natural point of comparison here is the value one. However, in this case a value of one indicates that the relative (and inferred) crime rate in the sector is not higher or lower given the sector’s population.</p>
+<p>With respect to race, the graph is consistent with what the previous plots illustrated: that blacks are significantly overrepresented in crime. To a lesser extent this also true of Alaska Natives and American Indians. Asians and whites are underrepresented.</p>
+<p>With respect to sector, one can see that in some cases relative crimes also noticeably higher. In particular, this is true for sectors K, M, and O which correspond to the downtown/south Seattle corridor. This is not surprising given that these sectors have both high arrests rates and low resident populations.</p>
+<p>Finally, one can compare the observed stops and arrests with what the model would predict using simulation. Classification rates – or the proportion of <span class="math inline">\(y_{rst}\)</span> and <span class="math inline">\(a_{rst}\)</span> that are consistent with the model – are summarized in Table 4 below:</p>
+<table>
+<caption><span id="tab:tab-class">Table 4: </span>Classification rates</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">2.1</th>
+<th align="center">2.2</th>
+<th align="center">2.3</th>
+<th align="center">2.4</th>
+<th align="center">2.5</th>
+<th align="center">2.6</th>
+<th align="center">2.7</th>
+<th align="center">2.8</th>
+<th align="center">2.9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(y_{rst}\)</span></td>
+<td align="center">91.2</td>
+<td align="center">94.9</td>
+<td align="center">86.8</td>
+<td align="center">72.8</td>
+<td align="center">72.8</td>
+<td align="center">83.1</td>
+<td align="center">86.0</td>
+<td align="center">91.2</td>
+<td align="center">90.4</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(a_{rst}\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">97.1</td>
+<td align="center">92.6</td>
+<td align="center">91.9</td>
+<td align="center">97.1</td>
+<td align="center">92.6</td>
+<td align="center">91.9</td>
+</tr>
+</tbody>
+</table>
+<p>Check out the <a href="https://github.com/johnson-shuffle/rsji">repo</a> for the code used in this analysis.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>There is a paucity of Hispanic data and so this group is not considered. Furthermore, this information is not tracked uniformly; NIBRS and ACS consider Hispanic to be an ethnicity distinct from race while the data available from SPD do not.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>

@@ -1,0 +1,154 @@
+---
+title: U.S. carbon dioxide emissions from the electricity sector at the plant-level
+author: ~
+date: '2017-10-02'
+slug: u-s-carbon-dioxide-emissions-from-the-electricity-sector-at-the-plant-level
+categories: []
+tags: ['carbon dioxide']
+math: true
+---
+
+
+
+<p>A major component of my dissertation centered on the relationship between carbon emissions and environmental voting in congress. To understand this relationship better I wanted to link emissions from a legislator’s constituency to their voting patterns. For senators, this step was straightforward as the U.S. Energy Information Administration (EIA) provides state-level inventories of CO<span class="math inline">\(_2\)</span> emissions. For representatives, this requires district-level inventories which the EIA does not provide directly. However, it is possible to construct such inventories (at least from the electricity sector) using information the EIA does provide: plant-level fuel consumption used for electricity generation, spatial locations of individual plants, and carbon dioxide emissions factors for commonly used fuels. These data combined with spatial information on congressional districts allows one to arrive at estimates of emissions. This post describes how to construct such estimates.</p>
+<div id="plant-level-data" class="section level3">
+<h3>Plant-level data</h3>
+<p>Between the years 1970 to 2012, EIA fuel consumption data for individual plants can be found on forms 867, 906, 920, and 923 which are available <a href="https://www.eia.gov/electricity/data/eia923/">here</a>. These data are not without their idiosyncrasies. For example, form 906 prior to 2001 provides fuel consumption data in physical units only while the others also provide this information in terms of millions of British Thermal Units (MMBTUs).<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> These latter forms also distinguish between fuel consumption devoted to producing electricity vs that used for other purposes (namely, to generate heat). The forms also rely on different codes for the fuels consumed and have alternating naming conventions for the variables provided over time.</p>
+<p>Spatial data for the plants can be found on form 860 available <a href="https://www.eia.gov/electricity/data/eia860/">here</a>. Here again lies a peculiarity in that for some plants the latitude and longitude are not the same across years. Furthermore, these coordinates are only provided for 2012 and after.</p>
+</div>
+<div id="emissions-factors" class="section level3">
+<h3>Emissions factors</h3>
+<p>The carbon potential for the fuels used in producing electricity are represented by emissions factors which typically come in the form of kilograms of CO<span class="math inline">\(_2\)</span> per physical unit (e.g. barrel, ton, cubic foot) or kilograms of CO<span class="math inline">\(_2\)</span> per MMBTUs. The EIA lists some of these factors in Table A.3. of the <a href="https://www.eia.gov/electricity/annual/html/epa_a_03.html">Electric Power Annual</a>.</p>
+<p>Notably though, only 18 factors are given in Table A.3. which does not cover the approximately 78 unique energy codes that can be found in the data spanning 1970 to 2016. In some cases, codes have merely been renamed over time; for example, Anthracite coal corresponds to both the code ‘4’ and the code ‘ANT’ depending on year. For the other cases, the Environmental Protection Agency (EPA) provides a larger set of emissions factors which can be found <a href="https://www.epa.gov/sites/production/files/2015-07/documents/emission-factors_2014.pdf">here</a>; using the fuel description as a guide, it is possible to fill in the gaps in many cases.</p>
+<p>For complete coverage however, some additional assumptions are ulitmately necessary. For example, the fuel code ‘COL’ refers to generic coal. With no corresponding factor available directly, a reasonable proxy might be the average of the Anthracite, Bituminous, and Lignite varieties. Similarly the average of the distillate and residual fuel oils can be used for the code ‘PET’ which refers to generic petroleum.</p>
+</div>
+<div id="district-maps" class="section level3">
+<h3>District maps</h3>
+<p>Congressional district maps can be found <a href="http://cdmaps.polisci.ucla.edu/">here</a>. Alternatively, district maps can also be retrieved using the <code>tigris</code> package and the <code>congressional_districts()</code> function. However, shape files are not available prior to 2011.</p>
+</div>
+<div id="putting-it-all-together" class="section level3">
+<h3>Putting it all together</h3>
+<p>Most of the heavy lifting (i.e. code) to create this data can be found in my <a href="https://github.com/johnson-shuffle/congress"><strong>congress</strong></a> repository. Here is a functional example of the work flow:</p>
+<pre class="r"><code>load_tidy() # custom function in my .Rprofile to load tidyverse packages
+library(rgdal)
+library(rgeos)
+
+td &lt;- tempdir()
+
+# plant coordinates from form 860
+download.file(
+  &#39;http://www.eia.gov/electricity/data/eia860/xls/eia8602014.zip&#39;, 
+  destfile = str_c(td, &#39;/tmp.zip&#39;)
+  )
+fln &lt;- unzip(str_c(td, &#39;/tmp.zip&#39;), list = T)
+fln &lt;- fln$Name[grep(&#39;plant&#39;, fln$Name, ignore.case = T)]
+unzip(str_c(td, &#39;/tmp.zip&#39;), fln, exdir = td)
+f860 &lt;- read_excel(str_c(td, fln, sep = &#39;/&#39;), skip = 1)
+f860 %&lt;&gt;% filter(!is.na(Longitude))
+
+# plant-level data from form 923
+download.file(
+  &#39;https://www.eia.gov/electricity/data/eia923/xls/f923_2014.zip&#39;,
+  destfile = str_c(td, &#39;/tmp.zip&#39;)
+  )
+fln &lt;- unzip(str_c(td, &#39;/tmp.zip&#39;), list = T) %&gt;% arrange(desc(Length))
+unzip(str_c(td, &#39;/tmp.zip&#39;), fln$Name[1], exdir = td)
+f923 &lt;- read_excel(str_c(td, fln$Name[1], sep = &#39;/&#39;), skip = 5)
+
+# emissions factors from table a3
+download.file(
+  &#39;https://www.eia.gov/electricity/annual/xls/epa_a_03.xlsx&#39;,
+  destfile = str_c(td, &#39;/tmp.xlsx&#39;)
+  )
+co2 &lt;- read_excel(str_c(td, &#39;/tmp.xlsx&#39;), skip = 1)
+
+# district map (113th congress)
+download.file(
+  &#39;http://cdmaps.polisci.ucla.edu/shp/districts113.zip&#39;,
+  destfile = str_c(td, &#39;/cdm.zip&#39;)
+  )
+unzip(str_c(td, &#39;/cdm.zip&#39;), exdir = td)
+cdm &lt;- readOGR(str_c(td, &#39;/districtShapes/&#39;), &#39;districts113&#39;)</code></pre>
+<pre><code>## OGR data source with driver: ESRI Shapefile 
+## Source: &quot;/var/folders/07/ps03w6cd76q0ckzfk5d7jrwc0000gn/T//RtmpiIhYgy/districtShapes/&quot;, layer: &quot;districts113&quot;
+## with 436 features
+## It has 15 fields</code></pre>
+<pre class="r"><code># spatially merge plant coordinates with the district map
+coordinates(f860) &lt;- c(&#39;Longitude&#39;, &#39;Latitude&#39;)
+proj4string(f860) &lt;- proj4string(cdm)
+dat &lt;- over(f860, cdm)
+dat &lt;- cbind(f860@data$`Plant Code`, dat)
+names(dat)[1] &lt;- &#39;Plant Id&#39;
+
+# join everything
+final &lt;- left_join(f923, dat, by = &#39;Plant Id&#39;)
+final &lt;- left_join(
+  final,
+  co2,
+  by = c(&#39;Reported\r\nFuel Type Code&#39; = &#39;EIA Fuel Code&#39;)
+  ) %&gt;%
+  mutate(co2 = `Elec Fuel Consumption\r\nMMBtu` * as.numeric(`\r\nFactor (Kilograms of CO2 Per Million Btu)**`) / 1E9)
+rm(dat)
+
+# house and senate
+hou &lt;- final %&gt;%
+  group_by(STATENAME, DISTRICT) %&gt;%
+  summarise(co2 = sum(co2, na.rm = T))
+
+sen &lt;- final %&gt;%
+  group_by(STATENAME) %&gt;%
+  summarise(co2 = sum(co2, na.rm = T))
+
+unlink(td)</code></pre>
+<p>The data can now be used to generate some basic cartograms. For example, here are the district-level emissions for Washington state along with the location of each plant:</p>
+<pre class="r"><code># districts in washington
+hou &lt;- left_join(hou, distinct(cdm@data[c(&#39;STATENAME&#39;, &#39;DISTRICT&#39;, &#39;ID&#39;)]))
+houm &lt;- cdm[cdm$STATENAME == &#39;Washington&#39;, ]
+houm &lt;- gBuffer(houm, byid = T, width = 0)
+houm &lt;- fortify(houm, region = &#39;ID&#39;)
+houm &lt;- left_join(houm, hou, by = c(&#39;id&#39; = &#39;ID&#39;))
+
+# plants in washington
+wa &lt;- final %&gt;%
+  filter(STATENAME == &#39;Washington&#39;) %&gt;%
+  left_join(
+    data.frame(cbind(f860@data$`Plant Code`, f860@coords)),
+    by = c(&#39;Plant Id&#39; = &#39;V1&#39;)
+    ) %&gt;%
+  group_by(`Plant Id`, Longitude, Latitude) %&gt;%
+  summarise(co2 = sum(co2, na.rm = T))
+
+ggplot() +
+  geom_polygon(data = houm, aes(long, lat, group = group, fill = co2)) +
+  geom_point(data = wa, aes(Longitude, Latitude, size = co2), col = &#39;red&#39;) +
+  scale_size_continuous(name = &#39;&#39;) +
+  scale_fill_continuous(name = &#39;&#39;) +
+  coord_fixed(ratio = 1.45) +
+  theme(
+    axis.text  = element_blank(),
+    axis.title = element_blank()
+  ) +
+  ggtitle(&#39;Carbon dioxide in 2014 (millions of metric tons)&#39;)</code></pre>
+<p><img src="/post/2017-10-02-u-s-carbon-dioxide-emissions-from-the-electricity-sector-at-the-plant-level_files/figure-html/plot_wa-1.png" width="672" /></p>
+<p>Here is a look at the inventories aggregated to the state-level:</p>
+<pre class="r"><code># contiguous united states
+senm &lt;- map_data(&#39;state&#39;) %&gt;% mutate(region = str_to_title(region))
+senm &lt;- left_join(senm, sen, by = c(&#39;region&#39; = &#39;STATENAME&#39;))
+ggplot(senm) +
+  geom_polygon(aes(long, lat, group = group, fill = co2)) +
+  scale_fill_continuous(name = &#39;&#39;) +
+  coord_fixed(ratio = 1.45) +
+  theme(
+    axis.text  = element_blank(),
+    axis.title = element_blank()
+  ) +
+  ggtitle(&#39;Carbon dioxide in 2014 (millions of metric tons)&#39;)</code></pre>
+<p><img src="/post/2017-10-02-u-s-carbon-dioxide-emissions-from-the-electricity-sector-at-the-plant-level_files/figure-html/plot_st-1.png" width="672" /></p>
+<p>There is obviously a lot more that can be done in terms of visualization; the above serves as just an example.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Things become even more complicated if one is interested in sulfur dioxide and nitrogen oxide emissions. This requires use of form 767 which uses a different scale for the physical units (e.g. 1000s of barrels instead of barrels, etc.).<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
