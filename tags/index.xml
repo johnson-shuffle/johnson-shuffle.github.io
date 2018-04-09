@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on </title>
+    <link>https://johnson-shuffle.github.io/tags/</link>
+    <description>Recent content in Tags on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Jacob Johnson</copyright>
+    <lastBuildDate>Mon, 11 Sep 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://johnson-shuffle.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Blogdown</title>
+      <link>https://johnson-shuffle.github.io/tags/blogdown/</link>
+      <pubDate>Mon, 11 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://johnson-shuffle.github.io/tags/blogdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Carbon dioxide</title>
+      <link>https://johnson-shuffle.github.io/tags/carbon-dioxide/</link>
+      <pubDate>Mon, 02 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://johnson-shuffle.github.io/tags/carbon-dioxide/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>GitHub</title>
+      <link>https://johnson-shuffle.github.io/tags/github/</link>
+      <pubDate>Mon, 11 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://johnson-shuffle.github.io/tags/github/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>https://johnson-shuffle.github.io/tags/r/</link>
+      <pubDate>Mon, 11 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://johnson-shuffle.github.io/tags/r/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

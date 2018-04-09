@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Carbon dioxide on </title>
+    <link>https://johnson-shuffle.github.io/tags/carbon-dioxide/</link>
+    <description>Recent content in Carbon dioxide on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Jacob Johnson</copyright>
+    <lastBuildDate>Mon, 02 Oct 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://johnson-shuffle.github.io/tags/carbon-dioxide/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>U.S. carbon dioxide emissions from the electricity sector at the plant-level</title>
+      <link>https://johnson-shuffle.github.io/post/u-s-carbon-dioxide-emissions-from-the-electricity-sector-at-the-plant-level/</link>
+      <pubDate>Mon, 02 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://johnson-shuffle.github.io/post/u-s-carbon-dioxide-emissions-from-the-electricity-sector-at-the-plant-level/</guid>
+      <description>A major component of my dissertation centered on the relationship between carbon emissions and environmental voting in congress. To understand this relationship better I wanted to link emissions from a legislator’s constituency to their voting patterns. For senators, this step was straightforward as the U.S. Energy Information Administration (EIA) provides state-level inventories of CO\(_2\) emissions. For representatives, this requires district-level inventories which the EIA does not provide directly. However, it is possible to construct such inventories (at least from the electricity sector) using information the EIA does provide: plant-level fuel consumption used for electricity generation, spatial locations of individual plants, and carbon dioxide emissions factors for commonly used fuels.</description>
+    </item>
+    
+  </channel>
+</rss>

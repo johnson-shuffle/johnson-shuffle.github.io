@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title></title>
+    <link>https://johnson-shuffle.github.io/</link>
+    <description>Recent content on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Jacob Johnson</copyright>
+    <lastBuildDate>Wed, 20 Apr 2016 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Seattle Terry stops</title>
+      <link>https://johnson-shuffle.github.io/post/seattle-terry-stops/</link>
+      <pubDate>Mon, 06 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://johnson-shuffle.github.io/post/seattle-terry-stops/</guid>
+      <description>&lt;p&gt;Below is a look into racial bias in Seattle’s &lt;a href=&#34;https://en.wikipedia.org/wiki/Terry_stop&#34;&gt;Terry stop&lt;/a&gt; data which I did as part of volunteer work for &lt;a href=&#34;http://datafordemocracy.org/&#34;&gt;Data For Democracy&lt;/a&gt;. The analysis is based on a paper which examines “Stop-and-Frisk” in New York City which can be found &lt;a href=&#34;http://www.stat.columbia.edu/~gelman/research/published/frisk9.pdf&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;!--#########################################################################--&gt;
+&lt;div id=&#34;data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data&lt;/h1&gt;
+&lt;!--#########################################################################--&gt;
+&lt;div id=&#34;seattle-incident-based-reporting&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Seattle Incident-Based Reporting&lt;/h2&gt;
+&lt;p&gt;Below are maps which show the spatial locations of all Seattle Police Department (SPD) incidents in 2016 for which data is available. The full data set is available &lt;a href=&#34;https://data.seattle.gov/Public-Safety/Seattle-Police-Department-Police-Report-Incident/7ais-f98f&#34;&gt;here&lt;/a&gt;. Each map corresponds to one of the Uniform Crime Reporting (UCR)’s 12 categories while the colored areas delineate one of SPD’s 17 police sectors.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://johnson-shuffle.github.io/post/2017-11-06-seattle-terry-stops_files/figure-html/sibr-1.png&#34; width=&#34;864&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;national-incident-based-reporting&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;National Incident-Based Reporting&lt;/h2&gt;
+&lt;p&gt;Unfortunately, the data presented above do not include any demographic information; this is obviously problematic when one is interested in examining crime data along racial dimensions. Fortunately, SPD participates in the National Incident-Based Reporting System (&lt;a href=&#34;https://www.icpsr.umich.edu/icpsrweb/ICPSR/series/128&#34;&gt;NIBRS&lt;/a&gt;) and some of the records – approximately 40% – submitted into this system do contain demographic information however these NIBRS data does not include any spatial information.&lt;/p&gt;
+&lt;p&gt;To utilize both sources, the SPD and NIBRS are matched by incident datetime and type of crime which, of course, only works for instances in which this information is unique (otherwise it is not possible to match). Using this strategy, approximately 14% of the records can be matched. The significance of this is that the matched data provide demographic information by both sector AND race.&lt;/p&gt;
+&lt;p&gt;Aggregate counts by race/ethnicity are summarized below:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://johnson-shuffle.github.io/post/2017-11-06-seattle-terry-stops_files/figure-html/mibr-1.png&#34; width=&#34;864&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;where: A indicates Asian, B indicates black, H indicates Hispanic, I indicates Alaska Native or American Indian, and W indicates white. The solid portion of each bar in the plot above represents data found in the Arrestee segment of the NIBRS data set while the transparent portion represents data found in the Offender segment of the data set.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;terry-stops&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Terry stops&lt;/h2&gt;
+&lt;p&gt;SPD’s Terry stop data can be found &lt;a href=&#34;https://data.seattle.gov/Public-Safety/Terry-Stops/28ny-9ts8&#34;&gt;here&lt;/a&gt;. The aggregated demographic information – again, counts by race – is summarized below and one can see that the pattern is quite similar to that found in the incidents data:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://johnson-shuffle.github.io/post/2017-11-06-seattle-terry-stops_files/figure-html/terry-1-1.png&#34; width=&#34;864&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;A, B, H, I, and W are defined as above and – in this case – the solid portion of each bar represents stops that led to an arrest while the transparent portion represents stops that did not.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;american-community-survey&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;American Community Survey&lt;/h2&gt;
+&lt;p&gt;Demographic data for each police sector are obtained by utilizing the 2015 five-year estimates of the American Community Survey (ACS). These data are available at the block-group level of which the city contains 482; of these, 389 lie completely within one of the the 17 police sectors. For those block-groups lying in multiple sectors, the percentage of area of overlap between the sector and the block-group is used to spatially allocate the data.&lt;/p&gt;
+&lt;p&gt;For example, approximately 30% of the area of Block Group 6 of Census Tract 32 is located in sector B and so sector B is apportioned 30% of that block-group’s population, etc.&lt;/p&gt;
+&lt;p&gt;A natural point of comparison is the demographic profile of the city as a whole. This is summarized below:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://johnson-shuffle.github.io/post/2017-11-06-seattle-terry-stops_files/figure-html/acs-race-1.png&#34; width=&#34;324&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;In comparision to the counts of arrests and stops, one can see that blacks are dramatically overrepresented and it is exactly this type of race-based disparity that the city is hoping to address. For example, see &lt;a href=&#34;https://www.seattle.gov/rsji/about&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;With respect to the rest of the analysis, the following demographic and economic data from the ACS are also used:&lt;/p&gt;
+&lt;table&gt;
+&lt;caption&gt;&lt;span id=&#34;tab:acs-tom&#34;&gt;Table 1: &lt;/span&gt;Table of Means&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;Mean&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;SD&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;Min&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;Max&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;Median Income&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;61830.20&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;14767.72&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;33943.99&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;85110.19&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;Proportion black&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.09&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.07&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.01&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.24&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;Proportion with four year degree&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.62&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.15&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.32&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.79&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;!--#########################################################################--&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;models&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Models&lt;/h1&gt;
+&lt;!--#########################################################################--&gt;
+&lt;div id=&#34;approach-1&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Approach 1&lt;/h2&gt;
+&lt;p&gt;For each race &lt;span class=&#34;math inline&#34;&gt;\(r = \{A, B, I, W\}\)&lt;/span&gt;&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; and police sector &lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;, the annual number of Terry stops &lt;span class=&#34;math inline&#34;&gt;\(y_{rst}\)&lt;/span&gt; is modeled by an overdispersed Poisson regression using the number of crimes &lt;span class=&#34;math inline&#34;&gt;\(\theta_{rs}\)&lt;/span&gt; as an offset:&lt;/p&gt;
+&lt;span class=&#34;math display&#34;&gt;\[\begin{equation*}
+y_{rst} \sim \text{Poisson} \left( \theta_{rs} e^{\mu + \alpha_r + \beta_s + \epsilon_{rst}} \right)
+\end{equation*}\]&lt;/span&gt;
+&lt;p&gt;where the &lt;span class=&#34;math inline&#34;&gt;\(\alpha_r\)&lt;/span&gt;’s account for variation between races, the &lt;span class=&#34;math inline&#34;&gt;\(\beta_s\)&lt;/span&gt;’s account for variation between sectors, and the &lt;span class=&#34;math inline&#34;&gt;\(\epsilon_{rs}\)&lt;/span&gt;’s allow for overdispersion. The subscript &lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt; is used explicitly since two years of data – 2015 and 2016 – are available.&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\theta_{rs}\)&lt;/span&gt; – of course – is not observed. Thus, the number of previous year’s arrests &lt;span class=&#34;math inline&#34;&gt;\(a_{rs(t-1)}\)&lt;/span&gt; is used as a proxy:&lt;/p&gt;
+&lt;span class=&#34;math display&#34; id=&#34;eq:model-b1&#34;&gt;\[\begin{equation}
+y_{rst} \sim \text{Poisson} \left( a_{rs(t-1)} e^{\mu + \alpha_r + \beta_s + \epsilon_{rst}} \right)
+\tag{1}
+\end{equation}\]&lt;/span&gt;
+&lt;p&gt;In addition to the model above, two alternative specifications are considered. First, the offset &lt;span class=&#34;math inline&#34;&gt;\(a_{rs(t-1)}\)&lt;/span&gt; is modeled more flexibly by including it as a predictor with its own coefficient:&lt;/p&gt;
+&lt;span class=&#34;math display&#34; id=&#34;eq:model-b2&#34;&gt;\[\begin{equation}
+y_{rst} \sim \text{Poisson} \left( e^{\gamma \log(a_{rs(t-1)}) + \mu + \alpha_r + \beta_s + \epsilon_{rst}} \right)
+\tag{2}
+\end{equation}\]&lt;/span&gt;
+&lt;p&gt;Second, the proportion of the sector’s population that is black &lt;span class=&#34;math inline&#34;&gt;\(z_{1s}\)&lt;/span&gt; is added as a predictor:&lt;/p&gt;
+&lt;span class=&#34;math display&#34; id=&#34;eq:model-b3&#34;&gt;\[\begin{equation}
+y_{rst} \sim \text{Poisson} \left( a_{rs(t-1)} e^{\mu + \alpha_r + \beta_s + \rho z_{1s} + \epsilon_{rst}} \right)
+\tag{3}
+\end{equation}\]&lt;/span&gt;
+&lt;/div&gt;
+&lt;div id=&#34;approach-2&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Approach 2&lt;/h2&gt;
+&lt;p&gt;As alternative approach, the number of arrests &lt;span class=&#34;math inline&#34;&gt;\(a_{rst}\)&lt;/span&gt; are assumed to be a realization of the true crime rate:&lt;/p&gt;
+&lt;span class=&#34;math display&#34;&gt;\[\begin{equation*}
+\begin{split}
+y_{rst} &amp;amp;\sim \text{Poisson} \left( \theta_{rs} e^{\mu + \alpha_r + \beta_s + \epsilon_{rst}} \right) \\
+a_{rst} &amp;amp;\sim \text{Poisson} \left( \theta_{rs} \right)
+\end{split}
+\end{equation*}\]&lt;/span&gt;
+&lt;p&gt;with the rate then modeled as function of each race’s population in the sector &lt;span class=&#34;math inline&#34;&gt;\(p_{rs}\)&lt;/span&gt; and an additional set of race and sector parameters &lt;span class=&#34;math inline&#34;&gt;\(\delta_r\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(\zeta_s\)&lt;/span&gt;:&lt;/p&gt;
+&lt;span class=&#34;math display&#34; id=&#34;eq:model-c1&#34;&gt;\[\begin{equation}
+\log(\theta_{rs}) = \log(p_{rs}) + \nu + \delta_r + \zeta_s + \upsilon_{rs}
+\tag{4}
+\end{equation}\]&lt;/span&gt;
+&lt;p&gt;Two additional specifications of the model for &lt;span class=&#34;math inline&#34;&gt;\(\theta_{rs}\)&lt;/span&gt; are also considered. First, the population &lt;span class=&#34;math inline&#34;&gt;\(p_{rs}\)&lt;/span&gt; is given its own coefficient:&lt;/p&gt;
+&lt;span class=&#34;math display&#34; id=&#34;eq:model-c2&#34;&gt;\[\begin{equation}
+\log(\theta_{rs}) = \gamma \log(p_{rs}) + \nu + \delta_r + \zeta_s + \upsilon_{rs}
+\tag{5}
+\end{equation}\]&lt;/span&gt;
+&lt;p&gt;Second, each sector’s median income &lt;span class=&#34;math inline&#34;&gt;\(z_{2s}\)&lt;/span&gt; and proportion of the population with at least a four-year degree &lt;span class=&#34;math inline&#34;&gt;\(z_{3s}\)&lt;/span&gt; are included as predictors:&lt;/p&gt;
+&lt;span class=&#34;math display&#34; id=&#34;eq:model-c3&#34;&gt;\[\begin{equation}
+\log(\theta_{rs}) = \log(p_{rs}) + \nu + \delta_r + \zeta_s + \phi z_{2s} + \psi z_{3s} + \upsilon_{rs}
+\tag{6}
+\end{equation}\]&lt;/span&gt;
+&lt;/div&gt;
+&lt;div id=&#34;approach-3&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Approach 3&lt;/h2&gt;
+&lt;p&gt;As a final approach, a model is considered where overdispersion in the model for &lt;span class=&#34;math inline&#34;&gt;\(a_{rst}\)&lt;/span&gt; is allowed for:&lt;/p&gt;
+&lt;span class=&#34;math display&#34;&gt;\[\begin{equation*}
+\begin{split}
+y_{rst} &amp;amp;\sim \text{Poisson} \left( \theta_{rs} e^{\mu + \alpha_r + \beta_s + \epsilon_{rst}} \right) \\
+a_{rst} &amp;amp;\sim \text{Poisson} \left( \theta_{rs} e^{\omega_{rst}} \right)
+\end{split}
+\end{equation*}\]&lt;/span&gt;
+&lt;p&gt;Similar specifications for the true crime rate as in &lt;a href=&#34;#eq:model-c1&#34;&gt;(4)&lt;/a&gt;, &lt;a href=&#34;#eq:model-c2&#34;&gt;(5)&lt;/a&gt;, and &lt;a href=&#34;#eq:model-c3&#34;&gt;(6)&lt;/a&gt; are used in this case with the exception of the &lt;span class=&#34;math inline&#34;&gt;\(\upsilon_{rs}\)&lt;/span&gt; term.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;inference&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Inference&lt;/h2&gt;
+&lt;p&gt;The models are fit using &lt;span class=&#34;math inline&#34;&gt;\(\texttt{Stan}\)&lt;/span&gt; with the following normal priors:&lt;/p&gt;
+&lt;span class=&#34;math display&#34;&gt;\[\begin{equation*}
+\begin{split}
+\alpha_r &amp;amp;\sim N(0, \sigma_{\alpha}^2) \\
+\beta_s &amp;amp;\sim N(0, \sigma_{\beta}^2) \\
+\epsilon_{rs} &amp;amp;\sim N(0, \sigma_{\epsilon}^2)
+\end{split}
+\end{equation*}\]&lt;/span&gt;
+&lt;p&gt;where &lt;span class=&#34;math inline&#34;&gt;\(\sigma_{\alpha}\)&lt;/span&gt;, &lt;span class=&#34;math inline&#34;&gt;\(\sigma_{\beta}\)&lt;/span&gt;, and &lt;span class=&#34;math inline&#34;&gt;\(\sigma_{\epsilon}\)&lt;/span&gt; represent the variation in the parameters for race, sector, and overdispersion respectively. A similar set of priors are used for the approaches which explicitly model &lt;span class=&#34;math inline&#34;&gt;\(\theta_{rs}\)&lt;/span&gt;:&lt;/p&gt;
+&lt;span class=&#34;math display&#34;&gt;\[\begin{equation*}
+\begin{split}
+\delta_r &amp;amp;\sim N(0, \sigma_{\delta}^2) \\
+\zeta_s &amp;amp;\sim N(0, \sigma_{\zeta}^2) \\
+\upsilon_{rs} &amp;amp;\sim N(0, \sigma_{\upsilon}^2) \\
+\omega_{rs} &amp;amp;\sim N(0, \sigma_{\omega}^2) 
+\end{split}
+\end{equation*}\]&lt;/span&gt;
+&lt;p&gt;The above &lt;span class=&#34;math inline&#34;&gt;\(\sigma\)&lt;/span&gt; hyperparameters – as well as all other parameters in each of the models – are given flat priors.&lt;/p&gt;
+&lt;!-- \begin{equation*} --&gt;
+&lt;!-- \begin{split} --&gt;
+&lt;!-- \sigma_{\alpha} &amp;\sim N_{\geq 0}(0, 1) \\ --&gt;
+&lt;!-- \sigma_{\delta} &amp;\sim N_{\geq 0}(0, 1) --&gt;
+&lt;!-- \end{split} --&gt;
+&lt;!-- \end{equation*} --&gt;
+&lt;!-- where $N_{\geq 0}$ denotes the half-normal distribution with non-negative support. --&gt;
+&lt;!--#########################################################################--&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;results&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Results&lt;/h1&gt;
+&lt;!--#########################################################################--&gt;
+&lt;table&gt;
+&lt;caption&gt;&lt;span id=&#34;tab:table-one&#34;&gt;Table 2: &lt;/span&gt;Estimates and standard errors for the Poisson regression model of &lt;span class=&#34;math inline&#34;&gt;\(y_{rst}\)&lt;/span&gt;&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;1&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;2&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;3&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;4&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;5&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;6&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;7&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;8&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;9&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;span class=&#34;math inline&#34;&gt;\(\mu^{adj}\)&lt;/span&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;-0.66 (0.03)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.28 (0.24)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;-0.63 (0.05)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;-0.67 (0.03)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;-0.68 (0.03)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;-0.67 (0.03)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;-0.67 (0.06)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;-0.68 (0.05)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;-0.67 (0.06)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.76 (0.06)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;span class=&#34;math inline&#34;&gt;\(\rho\)&lt;/span&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;-0.29 (0.50)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;span class=&#34;math inline&#34;&gt;\(\sigma_\beta\)&lt;/span&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.19 (0.05)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.13 (0.06)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.20 (0.05)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.20 (0.05)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.20 (0.05)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.20 (0.05)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.10 (0.08)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.12 (0.07)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.10 (0.07)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;span class=&#34;math inline&#34;&gt;\(\sigma_\epsilon\)&lt;/span&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.26 (0.04)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.29 (0.04)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.26 (0.04)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.20 (0.03)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.19 (0.03)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.19 (0.03)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.47 (0.04)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.36 (0.04)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.24 (0.02)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In the models for &lt;span class=&#34;math inline&#34;&gt;\(y_{rst}\)&lt;/span&gt;, the race and sector coefficients are considered relative to their mean by making the following adjustments:&lt;/p&gt;
+&lt;span class=&#34;math display&#34;&gt;\[\begin{equation*}
+\begin{split}
+\alpha_r^{adj} &amp;amp;= \alpha_r - \bar \alpha \\
+\beta_s^{adj} &amp;amp;= \beta_s - \bar \beta \\
+\mu^{adj} &amp;amp;= \mu + \bar \alpha + \bar \beta
+\end{split}
+\end{equation*}\]&lt;/span&gt;
+&lt;p&gt;Posterior estimates are presented in Table 2.&lt;/p&gt;
+&lt;p&gt;With the exception of &lt;a href=&#34;#eq:model-b2&#34;&gt;(2)&lt;/a&gt;, the estimates of &lt;span class=&#34;math inline&#34;&gt;\(\mu^{adj}\)&lt;/span&gt; indicate that prior to considering the race and sector effects, on average, the stop rates are approximately &lt;span class=&#34;math inline&#34;&gt;\(e^{-0.66}\)&lt;/span&gt; or 50% lower than the prior year’s arrest rates. The magnitude of this coefficient is directly related to the missingness in the stops data – recall, that only about 14% of the NIBRS data could be matched to the SPD data.&lt;/p&gt;
+&lt;p&gt;Including the proportion of the sector’s population that is black has no discernible impact on the model as &lt;span class=&#34;math inline&#34;&gt;\(\rho\)&lt;/span&gt; is indistinguishable from zero. Race and sector effects – expressed as &lt;span class=&#34;math inline&#34;&gt;\(e^{\alpha_r}\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(e^{\beta_s}\)&lt;/span&gt; are presented below:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://johnson-shuffle.github.io/post/2017-11-06-seattle-terry-stops_files/figure-html/plots-one-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;where the points indicate the posterior means and the error bars indicate the 95% HPD intervals. The natural point of comparison here is the value one which would indicate that relative stops – either among the races or the sectors – were not higher or lower than the prior year’s arrests would suggest.&lt;/p&gt;
+&lt;p&gt;From the graph one can see that Asians and blacks are stopped relatively less, Alaska Natives and American Indians are stopped relatively more (noticeably so!), while stops of whites are consistent with the average pattern observed between stops and arrests (i.e. a 50% difference).&lt;/p&gt;
+&lt;table&gt;
+&lt;caption&gt;&lt;span id=&#34;tab:table-two&#34;&gt;Table 3: &lt;/span&gt;Estimates and standard errors for the Poisson regression model of &lt;span class=&#34;math inline&#34;&gt;\(\theta_{rs}\)&lt;/span&gt;&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;4&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;5&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;6&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;7&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;8&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;9&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;span class=&#34;math inline&#34;&gt;\(\nu^{adj}\)&lt;/span&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;-3.90 (0.06)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.66 (0.58)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;-3.90 (0.06)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;-3.92 (0.04)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.08 (0.31)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;-3.92 (0.04)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.42 (0.07)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.49 (0.04)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;span class=&#34;math inline&#34;&gt;\(\phi\)&lt;/span&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;-1.07 (0.45)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;-0.96 (0.49)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;span class=&#34;math inline&#34;&gt;\(\psi\)&lt;/span&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.22 (0.47)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.14 (0.50)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;span class=&#34;math inline&#34;&gt;\(\sigma_\zeta\)&lt;/span&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.87 (0.19)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.58 (0.12)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.76 (0.18)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.94 (0.19)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.64 (0.13)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.82 (0.18)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;span class=&#34;math inline&#34;&gt;\(\sigma_\upsilon\)&lt;/span&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.46 (0.05)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.31 (0.04)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.46 (0.05)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;span class=&#34;math inline&#34;&gt;\(\sigma_\omega\)&lt;/span&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.40 (0.03)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.26 (0.03)&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;0.40 (0.03)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In the models for &lt;span class=&#34;math inline&#34;&gt;\(\theta_{rst}\)&lt;/span&gt;, the race and sector coefficients are also considered relative to their mean by making the similar adjustments:&lt;/p&gt;
+&lt;span class=&#34;math display&#34;&gt;\[\begin{equation*}
+\begin{split}
+\delta_r^{adj} &amp;amp;= \delta_r - \bar \delta \\
+\zeta_s^{adj} &amp;amp;= \zeta_s - \bar \zeta \\
+\nu^{adj} &amp;amp;= \nu + \bar \delta + \bar \zeta
+\end{split}
+\end{equation*}\]&lt;/span&gt;
+&lt;p&gt;Posterior estimates are presented in Table 3.&lt;/p&gt;
+&lt;p&gt;Excluding models that included &lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;, the estimates of &lt;span class=&#34;math inline&#34;&gt;\(\nu^{adj}\)&lt;/span&gt; indicate that prior to considering the race and sector effects – on average – the arrest rates correspond to approximately &lt;span class=&#34;math inline&#34;&gt;\(e^{-3.90}\)&lt;/span&gt; or 2% of the sector’s population.&lt;/p&gt;
+&lt;p&gt;Higher median income is associated with a lower true crime rate; the posterior mean for the coefficient suggests that there is a 33% reduction in the crime rate when median income changes from approximately 47,000 to 76,000 dollars. The proportion of the sector’s population with a four-year degree is positively associated with the true crime rate although this value is not distinguishable from zero. Race and sector effects – again, expressed as &lt;span class=&#34;math inline&#34;&gt;\(e^{\delta_r}\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(e^{\zeta_s}\)&lt;/span&gt; are presented below:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://johnson-shuffle.github.io/post/2017-11-06-seattle-terry-stops_files/figure-html/plots-two-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Once again, the natural point of comparison here is the value one. However, in this case a value of one indicates that the relative (and inferred) crime rate in the sector is not higher or lower given the sector’s population.&lt;/p&gt;
+&lt;p&gt;With respect to race, the graph is consistent with what the previous plots illustrated: that blacks are significantly overrepresented in crime. To a lesser extent this also true of Alaska Natives and American Indians. Asians and whites are underrepresented.&lt;/p&gt;
+&lt;p&gt;With respect to sector, one can see that in some cases relative crimes also noticeably higher. In particular, this is true for sectors K, M, and O which correspond to the downtown/south Seattle corridor. This is not surprising given that these sectors have both high arrests rates and low resident populations.&lt;/p&gt;
+&lt;p&gt;Finally, one can compare the observed stops and arrests with what the model would predict using simulation. Classification rates – or the proportion of &lt;span class=&#34;math inline&#34;&gt;\(y_{rst}\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(a_{rst}\)&lt;/span&gt; that are consistent with the model – are summarized in Table 4 below:&lt;/p&gt;
+&lt;table&gt;
+&lt;caption&gt;&lt;span id=&#34;tab:tab-class&#34;&gt;Table 4: &lt;/span&gt;Classification rates&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;2.1&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;2.2&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;2.3&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;2.4&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;2.5&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;2.6&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;2.7&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;2.8&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;2.9&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;span class=&#34;math inline&#34;&gt;\(y_{rst}\)&lt;/span&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;91.2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;94.9&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;86.8&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;72.8&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;72.8&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;83.1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;86.0&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;91.2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;90.4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;span class=&#34;math inline&#34;&gt;\(a_{rst}\)&lt;/span&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;97.1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;92.6&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;91.9&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;97.1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;92.6&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;91.9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Check out the &lt;a href=&#34;https://github.com/johnson-shuffle/rsji&#34;&gt;repo&lt;/a&gt; for the code used in this analysis.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;There is a paucity of Hispanic data and so this group is not considered. Furthermore, this information is not tracked uniformly; NIBRS and ACS consider Hispanic to be an ethnicity distinct from race while the data available from SPD do not.&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>U.S. carbon dioxide emissions from the electricity sector at the plant-level</title>
+      <link>https://johnson-shuffle.github.io/post/u-s-carbon-dioxide-emissions-from-the-electricity-sector-at-the-plant-level/</link>
+      <pubDate>Mon, 02 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://johnson-shuffle.github.io/post/u-s-carbon-dioxide-emissions-from-the-electricity-sector-at-the-plant-level/</guid>
+      <description>&lt;p&gt;A major component of my dissertation centered on the relationship between carbon emissions and environmental voting in congress. To understand this relationship better I wanted to link emissions from a legislator’s constituency to their voting patterns. For senators, this step was straightforward as the U.S. Energy Information Administration (EIA) provides state-level inventories of CO&lt;span class=&#34;math inline&#34;&gt;\(_2\)&lt;/span&gt; emissions. For representatives, this requires district-level inventories which the EIA does not provide directly. However, it is possible to construct such inventories (at least from the electricity sector) using information the EIA does provide: plant-level fuel consumption used for electricity generation, spatial locations of individual plants, and carbon dioxide emissions factors for commonly used fuels. These data combined with spatial information on congressional districts allows one to arrive at estimates of emissions. This post describes how to construct such estimates.&lt;/p&gt;
+&lt;div id=&#34;plant-level-data&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Plant-level data&lt;/h3&gt;
+&lt;p&gt;Between the years 1970 to 2012, EIA fuel consumption data for individual plants can be found on forms 867, 906, 920, and 923 which are available &lt;a href=&#34;https://www.eia.gov/electricity/data/eia923/&#34;&gt;here&lt;/a&gt;. These data are not without their idiosyncrasies. For example, form 906 prior to 2001 provides fuel consumption data in physical units only while the others also provide this information in terms of millions of British Thermal Units (MMBTUs).&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; These latter forms also distinguish between fuel consumption devoted to producing electricity vs that used for other purposes (namely, to generate heat). The forms also rely on different codes for the fuels consumed and have alternating naming conventions for the variables provided over time.&lt;/p&gt;
+&lt;p&gt;Spatial data for the plants can be found on form 860 available &lt;a href=&#34;https://www.eia.gov/electricity/data/eia860/&#34;&gt;here&lt;/a&gt;. Here again lies a peculiarity in that for some plants the latitude and longitude are not the same across years. Furthermore, these coordinates are only provided for 2012 and after.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;emissions-factors&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Emissions factors&lt;/h3&gt;
+&lt;p&gt;The carbon potential for the fuels used in producing electricity are represented by emissions factors which typically come in the form of kilograms of CO&lt;span class=&#34;math inline&#34;&gt;\(_2\)&lt;/span&gt; per physical unit (e.g. barrel, ton, cubic foot) or kilograms of CO&lt;span class=&#34;math inline&#34;&gt;\(_2\)&lt;/span&gt; per MMBTUs. The EIA lists some of these factors in Table A.3. of the &lt;a href=&#34;https://www.eia.gov/electricity/annual/html/epa_a_03.html&#34;&gt;Electric Power Annual&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Notably though, only 18 factors are given in Table A.3. which does not cover the approximately 78 unique energy codes that can be found in the data spanning 1970 to 2016. In some cases, codes have merely been renamed over time; for example, Anthracite coal corresponds to both the code ‘4’ and the code ‘ANT’ depending on year. For the other cases, the Environmental Protection Agency (EPA) provides a larger set of emissions factors which can be found &lt;a href=&#34;https://www.epa.gov/sites/production/files/2015-07/documents/emission-factors_2014.pdf&#34;&gt;here&lt;/a&gt;; using the fuel description as a guide, it is possible to fill in the gaps in many cases.&lt;/p&gt;
+&lt;p&gt;For complete coverage however, some additional assumptions are ulitmately necessary. For example, the fuel code ‘COL’ refers to generic coal. With no corresponding factor available directly, a reasonable proxy might be the average of the Anthracite, Bituminous, and Lignite varieties. Similarly the average of the distillate and residual fuel oils can be used for the code ‘PET’ which refers to generic petroleum.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;district-maps&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;District maps&lt;/h3&gt;
+&lt;p&gt;Congressional district maps can be found &lt;a href=&#34;http://cdmaps.polisci.ucla.edu/&#34;&gt;here&lt;/a&gt;. Alternatively, district maps can also be retrieved using the &lt;code&gt;tigris&lt;/code&gt; package and the &lt;code&gt;congressional_districts()&lt;/code&gt; function. However, shape files are not available prior to 2011.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;putting-it-all-together&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Putting it all together&lt;/h3&gt;
+&lt;p&gt;Most of the heavy lifting (i.e. code) to create this data can be found in my &lt;a href=&#34;https://github.com/johnson-shuffle/congress&#34;&gt;&lt;strong&gt;congress&lt;/strong&gt;&lt;/a&gt; repository. Here is a functional example of the work flow:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;load_tidy() # custom function in my .Rprofile to load tidyverse packages
+library(rgdal)
+library(rgeos)
+
+td &amp;lt;- tempdir()
+
+# plant coordinates from form 860
+download.file(
+  &amp;#39;http://www.eia.gov/electricity/data/eia860/xls/eia8602014.zip&amp;#39;, 
+  destfile = str_c(td, &amp;#39;/tmp.zip&amp;#39;)
+  )
+fln &amp;lt;- unzip(str_c(td, &amp;#39;/tmp.zip&amp;#39;), list = T)
+fln &amp;lt;- fln$Name[grep(&amp;#39;plant&amp;#39;, fln$Name, ignore.case = T)]
+unzip(str_c(td, &amp;#39;/tmp.zip&amp;#39;), fln, exdir = td)
+f860 &amp;lt;- read_excel(str_c(td, fln, sep = &amp;#39;/&amp;#39;), skip = 1)
+f860 %&amp;lt;&amp;gt;% filter(!is.na(Longitude))
+
+# plant-level data from form 923
+download.file(
+  &amp;#39;https://www.eia.gov/electricity/data/eia923/xls/f923_2014.zip&amp;#39;,
+  destfile = str_c(td, &amp;#39;/tmp.zip&amp;#39;)
+  )
+fln &amp;lt;- unzip(str_c(td, &amp;#39;/tmp.zip&amp;#39;), list = T) %&amp;gt;% arrange(desc(Length))
+unzip(str_c(td, &amp;#39;/tmp.zip&amp;#39;), fln$Name[1], exdir = td)
+f923 &amp;lt;- read_excel(str_c(td, fln$Name[1], sep = &amp;#39;/&amp;#39;), skip = 5)
+
+# emissions factors from table a3
+download.file(
+  &amp;#39;https://www.eia.gov/electricity/annual/xls/epa_a_03.xlsx&amp;#39;,
+  destfile = str_c(td, &amp;#39;/tmp.xlsx&amp;#39;)
+  )
+co2 &amp;lt;- read_excel(str_c(td, &amp;#39;/tmp.xlsx&amp;#39;), skip = 1)
+
+# district map (113th congress)
+download.file(
+  &amp;#39;http://cdmaps.polisci.ucla.edu/shp/districts113.zip&amp;#39;,
+  destfile = str_c(td, &amp;#39;/cdm.zip&amp;#39;)
+  )
+unzip(str_c(td, &amp;#39;/cdm.zip&amp;#39;), exdir = td)
+cdm &amp;lt;- readOGR(str_c(td, &amp;#39;/districtShapes/&amp;#39;), &amp;#39;districts113&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## OGR data source with driver: ESRI Shapefile 
+## Source: &amp;quot;/var/folders/07/ps03w6cd76q0ckzfk5d7jrwc0000gn/T//RtmpiIhYgy/districtShapes/&amp;quot;, layer: &amp;quot;districts113&amp;quot;
+## with 436 features
+## It has 15 fields&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# spatially merge plant coordinates with the district map
+coordinates(f860) &amp;lt;- c(&amp;#39;Longitude&amp;#39;, &amp;#39;Latitude&amp;#39;)
+proj4string(f860) &amp;lt;- proj4string(cdm)
+dat &amp;lt;- over(f860, cdm)
+dat &amp;lt;- cbind(f860@data$`Plant Code`, dat)
+names(dat)[1] &amp;lt;- &amp;#39;Plant Id&amp;#39;
+
+# join everything
+final &amp;lt;- left_join(f923, dat, by = &amp;#39;Plant Id&amp;#39;)
+final &amp;lt;- left_join(
+  final,
+  co2,
+  by = c(&amp;#39;Reported\r\nFuel Type Code&amp;#39; = &amp;#39;EIA Fuel Code&amp;#39;)
+  ) %&amp;gt;%
+  mutate(co2 = `Elec Fuel Consumption\r\nMMBtu` * as.numeric(`\r\nFactor (Kilograms of CO2 Per Million Btu)**`) / 1E9)
+rm(dat)
+
+# house and senate
+hou &amp;lt;- final %&amp;gt;%
+  group_by(STATENAME, DISTRICT) %&amp;gt;%
+  summarise(co2 = sum(co2, na.rm = T))
+
+sen &amp;lt;- final %&amp;gt;%
+  group_by(STATENAME) %&amp;gt;%
+  summarise(co2 = sum(co2, na.rm = T))
+
+unlink(td)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The data can now be used to generate some basic cartograms. For example, here are the district-level emissions for Washington state along with the location of each plant:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# districts in washington
+hou &amp;lt;- left_join(hou, distinct(cdm@data[c(&amp;#39;STATENAME&amp;#39;, &amp;#39;DISTRICT&amp;#39;, &amp;#39;ID&amp;#39;)]))
+houm &amp;lt;- cdm[cdm$STATENAME == &amp;#39;Washington&amp;#39;, ]
+houm &amp;lt;- gBuffer(houm, byid = T, width = 0)
+houm &amp;lt;- fortify(houm, region = &amp;#39;ID&amp;#39;)
+houm &amp;lt;- left_join(houm, hou, by = c(&amp;#39;id&amp;#39; = &amp;#39;ID&amp;#39;))
+
+# plants in washington
+wa &amp;lt;- final %&amp;gt;%
+  filter(STATENAME == &amp;#39;Washington&amp;#39;) %&amp;gt;%
+  left_join(
+    data.frame(cbind(f860@data$`Plant Code`, f860@coords)),
+    by = c(&amp;#39;Plant Id&amp;#39; = &amp;#39;V1&amp;#39;)
+    ) %&amp;gt;%
+  group_by(`Plant Id`, Longitude, Latitude) %&amp;gt;%
+  summarise(co2 = sum(co2, na.rm = T))
+
+ggplot() +
+  geom_polygon(data = houm, aes(long, lat, group = group, fill = co2)) +
+  geom_point(data = wa, aes(Longitude, Latitude, size = co2), col = &amp;#39;red&amp;#39;) +
+  scale_size_continuous(name = &amp;#39;&amp;#39;) +
+  scale_fill_continuous(name = &amp;#39;&amp;#39;) +
+  coord_fixed(ratio = 1.45) +
+  theme(
+    axis.text  = element_blank(),
+    axis.title = element_blank()
+  ) +
+  ggtitle(&amp;#39;Carbon dioxide in 2014 (millions of metric tons)&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://johnson-shuffle.github.io/post/2017-10-02-u-s-carbon-dioxide-emissions-from-the-electricity-sector-at-the-plant-level_files/figure-html/plot_wa-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Here is a look at the inventories aggregated to the state-level:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# contiguous united states
+senm &amp;lt;- map_data(&amp;#39;state&amp;#39;) %&amp;gt;% mutate(region = str_to_title(region))
+senm &amp;lt;- left_join(senm, sen, by = c(&amp;#39;region&amp;#39; = &amp;#39;STATENAME&amp;#39;))
+ggplot(senm) +
+  geom_polygon(aes(long, lat, group = group, fill = co2)) +
+  scale_fill_continuous(name = &amp;#39;&amp;#39;) +
+  coord_fixed(ratio = 1.45) +
+  theme(
+    axis.text  = element_blank(),
+    axis.title = element_blank()
+  ) +
+  ggtitle(&amp;#39;Carbon dioxide in 2014 (millions of metric tons)&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://johnson-shuffle.github.io/post/2017-10-02-u-s-carbon-dioxide-emissions-from-the-electricity-sector-at-the-plant-level_files/figure-html/plot_st-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;There is obviously a lot more that can be done in terms of visualization; the above serves as just an example.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;Things become even more complicated if one is interested in sulfur dioxide and nitrogen oxide emissions. This requires use of form 767 which uses a different scale for the physical units (e.g. 1000s of barrels instead of barrels, etc.).&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Setting up a blog via R, GitHub pages, and blogdown</title>
+      <link>https://johnson-shuffle.github.io/post/setting-up-a-blog-via-r-github-pages-and-blogdown/</link>
+      <pubDate>Mon, 11 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://johnson-shuffle.github.io/post/setting-up-a-blog-via-r-github-pages-and-blogdown/</guid>
+      <description>&lt;p&gt;I finally decided to bite the bullet and create a blog to document my exploration of economics and data science. This decision was made in tandem with an effort to start incorporating Git into my workflow. Why Git? I became more interested after reading this &lt;a href=&#34;https://peerj.com/preprints/3159/&#34;&gt;paper&lt;/a&gt; which I found via Revolution Analytics’ &lt;a href=&#34;http://blog.revolutionanalytics.com/&#34;&gt;blog&lt;/a&gt;. Incidentally, the author of that paper has an awesome introduction to Git and GitHub which can be found &lt;a href=&#34;http://happygitwithr.com/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;My primary tool for analysis, visualization, and documentation is &lt;a href=&#34;http://www.r-project.org/&#34;&gt;R&lt;/a&gt; along with its interface &lt;a href=&#34;https://www.rstudio.com/products/rstudio/#Desktop&#34;&gt;RStudio&lt;/a&gt;. It turns out that it is relatively straightforward to utilize RStudio’s Markdown functionality along with the R package &lt;a href=&#34;https://bookdown.org/yihui/blogdown/&#34;&gt;&lt;code&gt;blogdown&lt;/code&gt;&lt;/a&gt; to generate a static website which can then be hosted via &lt;a href=&#34;https://pages.github.com/&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;step-1-github&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Step 1: GitHub&lt;/h3&gt;
+&lt;p&gt;Get yourself a GitHub account and create a new repository called &lt;em&gt;USERNAME.github.io&lt;/em&gt; where USERNAME is your own GitHub account user name (for me this is johnson-shuffle). Be sure to check the box Initialize this repository with a README.&lt;/p&gt;
+&lt;p&gt;This should open the site for your new repository. Select create new file and provide the name &lt;em&gt;.nojekyll&lt;/em&gt; and commit; this prevents GitHub from building the site using &lt;code&gt;jekyll&lt;/code&gt;. After a bit of trial and error, I also decided it was convenient to have a folder within this repository to store all the generic &lt;code&gt;blogdown&lt;/code&gt; files. This required the following additional step. Create a new file with the name &lt;em&gt;blogdown/foo.txt&lt;/em&gt;. This creates the folder &lt;em&gt;blogdown&lt;/em&gt; (the file &lt;em&gt;foo.txt&lt;/em&gt; can be deleted later).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-2-create-a-version-controlled-rstudio-project&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Step 2: Create a version controlled RStudio Project&lt;/h3&gt;
+&lt;p&gt;Open up RStudio and create a new project using version control and the Git option. You will be prompted to provide:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Repository URL&lt;/strong&gt;: &lt;code&gt;https://USERNAME.github.io/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Project directory name&lt;/strong&gt;: leave this blank&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Create project as a subdirectory of&lt;/strong&gt;: select local directory for the repository&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Once you create the project, a new folder called &lt;em&gt;USERNAME.github.io&lt;/em&gt; should be created in whichever local directory you chose. This folder should contain:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;.gitignore&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;.nojekyll&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;README.md&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;/blogdown&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-3-install-and-implement-blogdown&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Step 3: Install and implement blogdown&lt;/h3&gt;
+&lt;p&gt;Assuming this new R project is open in RStudio, run the following:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(blogdown)
+
+setwd(&amp;#39;blogdown&amp;#39;)
+
+new_site(theme = &amp;#39;gcushen/academic&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The above should create a bunch of files in the &lt;em&gt;blogdown&lt;/em&gt; folder of the local directory. One of these is &lt;em&gt;config.toml&lt;/em&gt;. This file provides some personal information (name, education, social media, etc) used when building the site. Importantly, it also directs &lt;code&gt;blogdown&lt;/code&gt; on where to write the files when building. Open this file and add:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;publishDir = &amp;quot;../&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;at the top of the file. This ensures that &lt;code&gt;blogdown&lt;/code&gt; builds the website directly into the &lt;em&gt;USERNAME.github.io&lt;/em&gt; folder. The site can now be built by running:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hugo_build()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Note that the &lt;code&gt;theme&lt;/code&gt; option of &lt;code&gt;new_site()&lt;/code&gt; is optional. See the documentation on &lt;code&gt;blogdown&lt;/code&gt; for more options on themes.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-4-commit-changes-to-github&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Step 4: Commit changes to GitHub&lt;/h3&gt;
+&lt;p&gt;At this point, commit the changes by navigating to the Git pane in RStudio. Press commit, select all the files, and add a message. Once everything is committed, press push to sync with GitHub. If everything worked correctly, navigating to &lt;code&gt;https://USERNAME.github.io/&lt;/code&gt; should produce the new site.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blogdown on </title>
+    <link>https://johnson-shuffle.github.io/tags/blogdown/</link>
+    <description>Recent content in Blogdown on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Jacob Johnson</copyright>
+    <lastBuildDate>Mon, 11 Sep 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://johnson-shuffle.github.io/tags/blogdown/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Setting up a blog via R, GitHub pages, and blogdown</title>
+      <link>https://johnson-shuffle.github.io/post/setting-up-a-blog-via-r-github-pages-and-blogdown/</link>
+      <pubDate>Mon, 11 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://johnson-shuffle.github.io/post/setting-up-a-blog-via-r-github-pages-and-blogdown/</guid>
+      <description>I finally decided to bite the bullet and create a blog to document my exploration of economics and data science. This decision was made in tandem with an effort to start incorporating Git into my workflow. Why Git? I became more interested after reading this paper which I found via Revolution Analytics’ blog. Incidentally, the author of that paper has an awesome introduction to Git and GitHub which can be found here.</description>
+    </item>
+    
+  </channel>
+</rss>
