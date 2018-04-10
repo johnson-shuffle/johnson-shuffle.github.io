@@ -13,7 +13,7 @@ title = ""
 
 # Your copyright notice - appears in site footer.
 # To display a copyright symbol, type `&copy;`.
-copyright = "&copy; 2018 Jacob Johnson"
+copyright = "&copy; 2018 Jake Johnson"
 
 theme = "hugo-academic"
 enableEmoji = true
@@ -53,7 +53,7 @@ defaultContentLanguageInSubdir = false
   font = "default"
 
   # Your details.
-  name = "Jacob Johnson"
+  name = "Jake Johnson"
   role = ""
 
   # Organizations/Affiliations.

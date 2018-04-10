@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title></title>
-    <link>https://johnson-shuffle.github.io/</link>
+    <link>/</link>
     <description>Recent content on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>&amp;copy; 2018 Jacob Johnson</copyright>
+    <copyright>&amp;copy; 2018 Jake Johnson</copyright>
     <lastBuildDate>Wed, 20 Apr 2016 00:00:00 +0000</lastBuildDate>
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Seattle Terry stops</title>
-      <link>https://johnson-shuffle.github.io/post/seattle-terry-stops/</link>
+      <link>/post/seattle-terry-stops/</link>
       <pubDate>Mon, 06 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://johnson-shuffle.github.io/post/seattle-terry-stops/</guid>
+      <guid>/post/seattle-terry-stops/</guid>
       <description>&lt;p&gt;Below is a look into racial bias in Seattle’s &lt;a href=&#34;https://en.wikipedia.org/wiki/Terry_stop&#34;&gt;Terry stop&lt;/a&gt; data which I did as part of volunteer work for &lt;a href=&#34;http://datafordemocracy.org/&#34;&gt;Data For Democracy&lt;/a&gt;. The analysis is based on a paper which examines “Stop-and-Frisk” in New York City which can be found &lt;a href=&#34;http://www.stat.columbia.edu/~gelman/research/published/frisk9.pdf&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;!--#########################################################################--&gt;
 &lt;div id=&#34;data&#34; class=&#34;section level1&#34;&gt;
@@ -24,20 +24,20 @@
 &lt;div id=&#34;seattle-incident-based-reporting&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Seattle Incident-Based Reporting&lt;/h2&gt;
 &lt;p&gt;Below are maps which show the spatial locations of all Seattle Police Department (SPD) incidents in 2016 for which data is available. The full data set is available &lt;a href=&#34;https://data.seattle.gov/Public-Safety/Seattle-Police-Department-Police-Report-Incident/7ais-f98f&#34;&gt;here&lt;/a&gt;. Each map corresponds to one of the Uniform Crime Reporting (UCR)’s 12 categories while the colored areas delineate one of SPD’s 17 police sectors.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://johnson-shuffle.github.io/post/2017-11-06-seattle-terry-stops_files/figure-html/sibr-1.png&#34; width=&#34;864&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2017-11-06-seattle-terry-stops_files/figure-html/sibr-1.png&#34; width=&#34;864&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;national-incident-based-reporting&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;National Incident-Based Reporting&lt;/h2&gt;
 &lt;p&gt;Unfortunately, the data presented above do not include any demographic information; this is obviously problematic when one is interested in examining crime data along racial dimensions. Fortunately, SPD participates in the National Incident-Based Reporting System (&lt;a href=&#34;https://www.icpsr.umich.edu/icpsrweb/ICPSR/series/128&#34;&gt;NIBRS&lt;/a&gt;) and some of the records – approximately 40% – submitted into this system do contain demographic information however these data do not include any spatial information.&lt;/p&gt;
 &lt;p&gt;To utilize both sources, the SPD and NIBRS are matched by incident datetime and type of crime which, of course, only works for instances in which this information is unique (otherwise it is not possible to match). Using this strategy, approximately 14% of the records can be matched. The significance of this is that the matched data provide demographic information by both sector AND race.&lt;/p&gt;
 &lt;p&gt;Aggregate counts by race/ethnicity are summarized below:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://johnson-shuffle.github.io/post/2017-11-06-seattle-terry-stops_files/figure-html/mibr-1.png&#34; width=&#34;864&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2017-11-06-seattle-terry-stops_files/figure-html/mibr-1.png&#34; width=&#34;864&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;where: A indicates Asian, B indicates black, H indicates Hispanic, I indicates Alaska Native or American Indian, and W indicates white. The solid portion of each bar in the plot above represents data found in the Arrestee segment of the NIBRS data set while the transparent portion represents data found in the Offender segment of the data set.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;terry-stops&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Terry stops&lt;/h2&gt;
 &lt;p&gt;SPD’s Terry stop data can be found &lt;a href=&#34;https://data.seattle.gov/Public-Safety/Terry-Stops/28ny-9ts8&#34;&gt;here&lt;/a&gt;. The aggregated demographic information – again, counts by race – is summarized below and one can see that the pattern is quite similar to that found in the incidents data:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://johnson-shuffle.github.io/post/2017-11-06-seattle-terry-stops_files/figure-html/terry-1-1.png&#34; width=&#34;864&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2017-11-06-seattle-terry-stops_files/figure-html/terry-1-1.png&#34; width=&#34;864&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;A, B, H, I, and W are defined as above and – in this case – the solid portion of each bar represents stops that led to an arrest while the transparent portion represents stops that did not.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;american-community-survey&#34; class=&#34;section level2&#34;&gt;
@@ -45,7 +45,7 @@
 &lt;p&gt;Demographic data for each police sector are obtained by utilizing the 2015 five-year estimates of the American Community Survey (ACS). These data are available at the block-group level of which the city contains 482; of these, 389 lie completely within one of the the 17 police sectors. For those block-groups lying in multiple sectors, the percentage of area of overlap between the sector and the block-group is used to spatially allocate the data.&lt;/p&gt;
 &lt;p&gt;For example, approximately 30% of the area of Block Group 6 of Census Tract 32 is located in sector B and so sector B is apportioned 30% of that block-group’s population, etc.&lt;/p&gt;
 &lt;p&gt;A natural point of comparison is the demographic profile of the city as a whole. This is summarized below:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://johnson-shuffle.github.io/post/2017-11-06-seattle-terry-stops_files/figure-html/acs-race-1.png&#34; width=&#34;324&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2017-11-06-seattle-terry-stops_files/figure-html/acs-race-1.png&#34; width=&#34;324&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;In comparision to the counts of arrests and stops, one can see that blacks are dramatically overrepresented and it is exactly this type of race-based disparity that the city is hoping to address. For example, see &lt;a href=&#34;https://www.seattle.gov/rsji/about&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;With respect to the rest of the analysis, the following demographic and economic data from the ACS are also used:&lt;/p&gt;
 &lt;table&gt;
@@ -271,7 +271,7 @@ a_{rst} &amp;amp;\sim \text{Poisson} \left( \theta_{rs} e^{\omega_{rst}} \right)
 &lt;p&gt;Posterior estimates are presented in Table 2.&lt;/p&gt;
 &lt;p&gt;With the exception of &lt;a href=&#34;#eq:model-b2&#34;&gt;(2)&lt;/a&gt;, the estimates of &lt;span class=&#34;math inline&#34;&gt;\(\mu^{adj}\)&lt;/span&gt; indicate that prior to considering the race and sector effects, on average, the stop rates are approximately &lt;span class=&#34;math inline&#34;&gt;\(e^{-0.66}\)&lt;/span&gt; or 50% lower than the prior year’s arrest rates. The magnitude of this coefficient is directly related to the missingness in the stops data – recall, that only about 14% of the NIBRS data could be matched to the SPD data.&lt;/p&gt;
 &lt;p&gt;Including the proportion of the sector’s population that is black has no discernible impact on the model as &lt;span class=&#34;math inline&#34;&gt;\(\rho\)&lt;/span&gt; is indistinguishable from zero. Race and sector effects – expressed as &lt;span class=&#34;math inline&#34;&gt;\(e^{\alpha_r}\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(e^{\beta_s}\)&lt;/span&gt; are presented below:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://johnson-shuffle.github.io/post/2017-11-06-seattle-terry-stops_files/figure-html/plots-one-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2017-11-06-seattle-terry-stops_files/figure-html/plots-one-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;where the points indicate the posterior means and the error bars indicate the 95% HPD intervals. The natural point of comparison here is the value one which would indicate that relative stops – either among the races or the sectors – were not higher or lower than the prior year’s arrests would suggest.&lt;/p&gt;
 &lt;p&gt;From the graph one can see that Asians and blacks are stopped relatively less, Alaska Natives and American Indians are stopped relatively more (noticeably so!), while stops of whites are consistent with the average pattern observed between stops and arrests (i.e. a 50% difference).&lt;/p&gt;
 &lt;table&gt;
@@ -364,7 +364,7 @@ a_{rst} &amp;amp;\sim \text{Poisson} \left( \theta_{rs} e^{\omega_{rst}} \right)
 &lt;p&gt;Posterior estimates are presented in Table 3.&lt;/p&gt;
 &lt;p&gt;Excluding models that included &lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;, the estimates of &lt;span class=&#34;math inline&#34;&gt;\(\nu^{adj}\)&lt;/span&gt; indicate that prior to considering the race and sector effects – on average – the arrest rates correspond to approximately &lt;span class=&#34;math inline&#34;&gt;\(e^{-3.90}\)&lt;/span&gt; or 2% of the sector’s population.&lt;/p&gt;
 &lt;p&gt;Higher median income is associated with a lower true crime rate; the posterior mean for the coefficient suggests that there is a 33% reduction in the crime rate when median income changes from approximately 47,000 to 76,000 dollars. The proportion of the sector’s population with a four-year degree is positively associated with the true crime rate although this value is not distinguishable from zero. Race and sector effects – again, expressed as &lt;span class=&#34;math inline&#34;&gt;\(e^{\delta_r}\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(e^{\zeta_s}\)&lt;/span&gt; are presented below:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://johnson-shuffle.github.io/post/2017-11-06-seattle-terry-stops_files/figure-html/plots-two-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2017-11-06-seattle-terry-stops_files/figure-html/plots-two-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Once again, the natural point of comparison here is the value one. However, in this case a value of one indicates that the relative (and inferred) crime rate in the sector is not higher or lower given the sector’s population.&lt;/p&gt;
 &lt;p&gt;With respect to race, the graph is consistent with what the previous plots illustrated: that blacks are significantly overrepresented in crime. To a lesser extent this also true of Alaska Natives and American Indians. Asians and whites are underrepresented.&lt;/p&gt;
 &lt;p&gt;With respect to sector, one can see that in some cases relative crimes also noticeably higher. In particular, this is true for sectors K, M, and O which correspond to the downtown/south Seattle corridor. This is not surprising given that these sectors have both high arrests rates and low resident populations.&lt;/p&gt;
@@ -425,10 +425,10 @@ a_{rst} &amp;amp;\sim \text{Poisson} \left( \theta_{rs} e^{\omega_{rst}} \right)
     
     <item>
       <title>U.S. carbon dioxide emissions from the electricity sector at the plant-level</title>
-      <link>https://johnson-shuffle.github.io/post/u-s-carbon-dioxide-emissions-from-the-electricity-sector-at-the-plant-level/</link>
+      <link>/post/u-s-carbon-dioxide-emissions-from-the-electricity-sector-at-the-plant-level/</link>
       <pubDate>Mon, 02 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://johnson-shuffle.github.io/post/u-s-carbon-dioxide-emissions-from-the-electricity-sector-at-the-plant-level/</guid>
+      <guid>/post/u-s-carbon-dioxide-emissions-from-the-electricity-sector-at-the-plant-level/</guid>
       <description>&lt;p&gt;A major component of my dissertation centered on the relationship between carbon emissions and environmental voting in congress. To understand this relationship better I wanted to link emissions from a legislator’s constituency to their voting patterns. For senators, this step was straightforward as the U.S. Energy Information Administration (EIA) provides state-level inventories of CO&lt;span class=&#34;math inline&#34;&gt;\(_2\)&lt;/span&gt; emissions. For representatives, this requires district-level inventories which the EIA does not provide directly. However, it is possible to construct such inventories (at least from the electricity sector) using information the EIA does provide: plant-level fuel consumption used for electricity generation, spatial locations of individual plants, and carbon dioxide emissions factors for commonly used fuels. These data combined with spatial information on congressional districts allows one to arrive at estimates of emissions. This post describes how to construct such estimates.&lt;/p&gt;
 &lt;div id=&#34;plant-level-data&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Plant-level data&lt;/h3&gt;
@@ -548,7 +548,7 @@ ggplot() +
     axis.title = element_blank()
   ) +
   ggtitle(&amp;#39;Carbon dioxide in 2014 (millions of metric tons)&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://johnson-shuffle.github.io/post/2017-10-02-u-s-carbon-dioxide-emissions-from-the-electricity-sector-at-the-plant-level_files/figure-html/plot_wa-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2017-10-02-u-s-carbon-dioxide-emissions-from-the-electricity-sector-at-the-plant-level_files/figure-html/plot_wa-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Here is a look at the inventories aggregated to the state-level:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# contiguous united states
 senm &amp;lt;- map_data(&amp;#39;state&amp;#39;) %&amp;gt;% mutate(region = str_to_title(region))
@@ -562,7 +562,7 @@ ggplot(senm) +
     axis.title = element_blank()
   ) +
   ggtitle(&amp;#39;Carbon dioxide in 2014 (millions of metric tons)&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://johnson-shuffle.github.io/post/2017-10-02-u-s-carbon-dioxide-emissions-from-the-electricity-sector-at-the-plant-level_files/figure-html/plot_st-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2017-10-02-u-s-carbon-dioxide-emissions-from-the-electricity-sector-at-the-plant-level_files/figure-html/plot_st-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;There is obviously a lot more that can be done in terms of visualization; the above serves as just an example.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;footnotes&#34;&gt;
@@ -576,10 +576,10 @@ ggplot(senm) +
     
     <item>
       <title>Setting up a blog via R, GitHub pages, and blogdown</title>
-      <link>https://johnson-shuffle.github.io/post/setting-up-a-blog-via-r-github-pages-and-blogdown/</link>
+      <link>/post/setting-up-a-blog-via-r-github-pages-and-blogdown/</link>
       <pubDate>Mon, 11 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://johnson-shuffle.github.io/post/setting-up-a-blog-via-r-github-pages-and-blogdown/</guid>
+      <guid>/post/setting-up-a-blog-via-r-github-pages-and-blogdown/</guid>
       <description>&lt;p&gt;I finally decided to bite the bullet and create a blog to document my exploration of economics and data science. This decision was made in tandem with an effort to start incorporating Git into my workflow. Why Git? I became more interested after reading this &lt;a href=&#34;https://peerj.com/preprints/3159/&#34;&gt;paper&lt;/a&gt; which I found via Revolution Analytics’ &lt;a href=&#34;http://blog.revolutionanalytics.com/&#34;&gt;blog&lt;/a&gt;. Incidentally, the author of that paper has an awesome introduction to Git and GitHub which can be found &lt;a href=&#34;http://happygitwithr.com/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;My primary tool for analysis, visualization, and documentation is &lt;a href=&#34;http://www.r-project.org/&#34;&gt;R&lt;/a&gt; along with its interface &lt;a href=&#34;https://www.rstudio.com/products/rstudio/#Desktop&#34;&gt;RStudio&lt;/a&gt;. It turns out that it is relatively straightforward to utilize RStudio’s Markdown functionality along with the R package &lt;a href=&#34;https://bookdown.org/yihui/blogdown/&#34;&gt;&lt;code&gt;blogdown&lt;/code&gt;&lt;/a&gt; to generate a static website which can then be hosted via &lt;a href=&#34;https://pages.github.com/&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;div id=&#34;step-1-github&#34; class=&#34;section level3&#34;&gt;
